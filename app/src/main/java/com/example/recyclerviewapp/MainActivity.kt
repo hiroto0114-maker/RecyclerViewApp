@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
+import android.widget.Button
 class MainActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
 
@@ -36,11 +36,11 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = MyRecyclerViewAdapter(pokemonList)
         recyclerView.adapter = MyRecyclerViewAdapter(pokemonList)
-        //adapter.findViewById<Button>(android.R.id.pokemon_button)setOnItemClickListener(View.OnClickListener { view ->
-            //val pokemonName = view.findViewById<TextView>(R.id.title)
-            //val pokemonName1 = pokemonName.text.toString()
-            //Toast.makeText(this@MainActivity, pokemonName1, Toast.LENGTH_LONG).show()
-        //})
+        recyclerView.adapter.findViewById<Button>(R.id.pokemon_button).setOnItemClickListener(View.OnClickListener { view ->
+            val pokemonName = view.findViewById<TextView>(R.id.title)
+            val pokemonName1 = pokemonName.text.toString()
+            Toast.makeText(this@MainActivity, pokemonName1, Toast.LENGTH_LONG).show()
+        })
     }
     interface OnItemClickListener {
         fun onItemClick(view: View?)
@@ -49,15 +49,18 @@ class MainActivity : AppCompatActivity() {
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val positionText: TextView
         val titleText: TextView
+        val pokemonButton: TextView
         init {
             positionText = itemView.findViewById(R.id.position)
             titleText = itemView.findViewById(R.id.title)
+            pokemonButton = itemView.findViewById(R.id.pokemon_button)
         }
     }
     class MyRecyclerViewAdapter(val list: List<String>) : RecyclerView.Adapter<MyViewHolder>() {
         private var listener: View.OnClickListener? = null
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
             val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_recycler_view, parent, false)
+
             return MyViewHolder(itemView)
         }
 
@@ -68,6 +71,9 @@ class MainActivity : AppCompatActivity() {
         override fun getItemCount(): Int = list.size
         fun setOnItemClickListener(listener: View.OnClickListener) {
             this.listener = listener
+        }
+        interface OnClickListener {
+            fun onClick(position: Int)
         }
     }
 
