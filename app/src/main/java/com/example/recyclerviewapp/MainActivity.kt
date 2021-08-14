@@ -36,13 +36,11 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = MyRecyclerViewAdapter(pokemonList)
         recyclerView.adapter = MyRecyclerViewAdapter(pokemonList)
-
-        adapter.setOnItemClickListener(View.OnClickListener { view ->
-            val pokemonName = view.findViewById<TextView>(R.id.title)
-            val pokemonName1 = pokemonName.text.toString()
-            Toast.makeText(this@MainActivity, pokemonName1, Toast.LENGTH_LONG).show()
-
-        })
+        //adapter.findViewById<Button>(android.R.id.pokemon_button)setOnItemClickListener(View.OnClickListener { view ->
+            //val pokemonName = view.findViewById<TextView>(R.id.title)
+            //val pokemonName1 = pokemonName.text.toString()
+            //Toast.makeText(this@MainActivity, pokemonName1, Toast.LENGTH_LONG).show()
+        //})
     }
     interface OnItemClickListener {
         fun onItemClick(view: View?)
