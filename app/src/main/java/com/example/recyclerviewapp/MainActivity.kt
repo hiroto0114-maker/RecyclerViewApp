@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import android.widget.Toast as Toast
+
 class MainActivity : AppCompatActivity() {
-    private lateinit var recyclerView: RecyclerView
+    lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private class MyRecyclerViewAdapter(val list: List<String>) : RecyclerView.Adapter<MyViewHolder>() {
+    class MyRecyclerViewAdapter(val list: List<String>) : RecyclerView.Adapter<MyViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
             val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_recycler_view, parent, false)
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         override fun onClick(view: View){
             val pokemonName=view.findViewById<TextView>(R.id.title)
             val pokemonName1=pokemonName.text.toString()
-            Toast.makeText(this@MainActivity, pokemonName1, Toast.LENGTH_LONG).show()
+            Toast.makeText(this@MainActivity, pokemonName1, Toast.LENGTH_SHORT).show()
         }
     }
 }
