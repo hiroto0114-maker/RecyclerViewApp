@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = MyRecyclerViewAdapter(pokemonList)
         recyclerView.adapter = adapter
-        adapter.setOnItemClickListener(View.OnClickListener { view ->
+        adapter.setOnItemClickListener({ view ->
             val pokemonName = view.findViewById<TextView>(R.id.title)
             val pokemonName1 = pokemonName.text.toString()
             Toast.makeText(this@MainActivity, pokemonName1, Toast.LENGTH_LONG).show()
