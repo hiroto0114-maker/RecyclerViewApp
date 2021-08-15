@@ -35,11 +35,14 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = MyRecyclerViewAdapter(pokemonList)
         recyclerView.adapter = adapter
-        adapter.setOnItemClickListener({ view ->
-            val pokemonName = view.findViewById<TextView>(R.id.title)
-            val pokemonName1 = pokemonName.text.toString()
-            Toast.makeText(this@MainActivity, pokemonName1, Toast.LENGTH_LONG).show()
-        })
+        adapter.setOnItemClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                val view=view.findViewById<TextView>(R.id.title)
+                val pokemonName = view.findViewById<TextView>(R.id.title)
+                val pokemonName1 = pokemonName.text.toString()
+                Toast.makeText(this@MainActivity, pokemonName1, Toast.LENGTH_LONG).show()
+            }
+        });
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
