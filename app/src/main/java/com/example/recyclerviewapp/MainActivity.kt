@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.widget.Button
 class MainActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
 
@@ -35,15 +34,12 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = MyRecyclerViewAdapter(pokemonList)
-        recyclerView.adapter = MyRecyclerViewAdapter(pokemonList)
-        recyclerView.adapter.findViewById<Button>(R.id.pokemon_button).setOnItemClickListener(View.OnClickListener { view ->
+        recyclerView.adapter = adapter
+        adapter.setOnItemClickListener(View.OnClickListener { view ->
             val pokemonName = view.findViewById<TextView>(R.id.title)
             val pokemonName1 = pokemonName.text.toString()
             Toast.makeText(this@MainActivity, pokemonName1, Toast.LENGTH_LONG).show()
         })
-    }
-    interface OnItemClickListener {
-        fun onItemClick(view: View?)
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -63,7 +59,6 @@ class MainActivity : AppCompatActivity() {
 
             return MyViewHolder(itemView)
         }
-
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             holder.positionText.text = position.toString()
             holder.titleText.text = list[position]
@@ -71,9 +66,6 @@ class MainActivity : AppCompatActivity() {
         override fun getItemCount(): Int = list.size
         fun setOnItemClickListener(listener: View.OnClickListener) {
             this.listener = listener
-        }
-        interface OnClickListener {
-            fun onClick(position: Int)
         }
     }
 
