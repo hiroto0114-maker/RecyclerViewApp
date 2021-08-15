@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
 class MainActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
 
@@ -35,16 +36,15 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = MyRecyclerViewAdapter(pokemonList)
         recyclerView.adapter = adapter
-        adapter.setOnItemClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                val view=view.findViewById<TextView>(R.id.title)
-                val pokemonName = view.findViewById<TextView>(R.id.title)
-                val pokemonName1 = pokemonName.text.toString()
-                Toast.makeText(this@MainActivity, pokemonName1, Toast.LENGTH_LONG).show()
-            }
-        });
+        adapter.setOnItemClickListener(ItemClickListener())
     }
-
+    inner class ItemClickListener :View.OnClickListener {
+        override fun onClick(view: View){
+            val pokemonName = view.findViewById<TextView>(R.id.title)
+            val pokemonName1 = pokemonName.text.toString()
+            Toast.makeText(this@MainActivity, pokemonName1, Toast.LENGTH_LONG).show()
+        }
+    }
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val positionText: TextView
         val titleText: TextView
@@ -59,7 +59,6 @@ class MainActivity : AppCompatActivity() {
         private var listener: View.OnClickListener? = null
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
             val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_recycler_view, parent, false)
-
             return MyViewHolder(itemView)
         }
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
