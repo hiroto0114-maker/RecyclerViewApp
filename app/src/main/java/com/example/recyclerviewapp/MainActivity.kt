@@ -10,11 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
-    lateinit var recyclerView: RecyclerView
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    /**
+     * 表示させるポケモンの文字列のリスト
+     */
+    fun createPokemonList(): List<String>{
         val pokemonList = listOf(
             "ピカチュウ",
             "カイリュー",
@@ -32,19 +31,22 @@ class MainActivity : AppCompatActivity() {
             "ガラガラ",
             "フシギダネ"
         )
+        return pokemonList
+    }
+    lateinit var recyclerView: RecyclerView
+    val pokemonList = createPokemonList()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = MyRecyclerViewAdapter(pokemonList)
         recyclerView.adapter = adapter
-        adapter.setOnItemClickListener(ItemClickListener())
     }
-    inner class ItemClickListener :View.OnClickListener {
-        override fun onClick(view: View){
-            val pokemonName = view.findViewById<TextView>(R.id.title)
-            val pokemonName1 = pokemonName.text.toString()
-            Toast.makeText(this@MainActivity, pokemonName1, Toast.LENGTH_LONG).show()
-        }
-    }
+
+    /**
+     *
+     */
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val positionText: TextView
         val titleText: TextView
@@ -53,10 +55,17 @@ class MainActivity : AppCompatActivity() {
             positionText = itemView.findViewById(R.id.position)
             titleText = itemView.findViewById(R.id.title)
             pokemonButton = itemView.findViewById(R.id.pokemon_button)
+            pokemonButton.setOnClickListener{v: View ->
+                Toast.makeText(pokemonButton.context, titleText.text.toString(), Toast.LENGTH_LONG).show()
+            }
         }
     }
+
+    /**
+     *
+     */
     class MyRecyclerViewAdapter(val list: List<String>) : RecyclerView.Adapter<MyViewHolder>() {
-        private var listener: View.OnClickListener? = null
+
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
             val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_recycler_view, parent, false)
             return MyViewHolder(itemView)
@@ -66,9 +75,7 @@ class MainActivity : AppCompatActivity() {
             holder.titleText.text = list[position]
         }
         override fun getItemCount(): Int = list.size
-        fun setOnItemClickListener(listener: View.OnClickListener) {
-            this.listener = listener
-        }
+
     }
 
 }
