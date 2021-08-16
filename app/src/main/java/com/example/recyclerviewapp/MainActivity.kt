@@ -38,9 +38,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = MyRecyclerViewAdapter(pokemonList)
+        val adapter = MyRecyclerViewAdapter(pokemonList, object : MyRecyclerViewAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                Toast.makeText(this@MainActivity, pokemonList[position], Toast.LENGTH_LONG).show()
+            }
+        })
         recyclerView.adapter = adapter
     }
 
@@ -64,8 +69,8 @@ class MainActivity : AppCompatActivity() {
     /**
      *
      */
-    class MyRecyclerViewAdapter(val list: List<String>) : RecyclerView.Adapter<MyViewHolder>() {
 
+    class MyRecyclerViewAdapter(private val list: List<String>, private val listener: OnItemClickListener) : RecyclerView.Adapter<MyViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
             val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_recycler_view, parent, false)
             return MyViewHolder(itemView)
@@ -75,9 +80,14 @@ class MainActivity : AppCompatActivity() {
             holder.titleText.text = list[position]
         }
         override fun getItemCount(): Int = list.size
-
+        interface OnItemClickListener {
+            fun onItemClick(position: Int)
+        }
     }
 
+
 }
+
+
 
 
