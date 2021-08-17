@@ -55,19 +55,19 @@ class MainActivity : AppCompatActivity() {
             positionText = itemView.findViewById(R.id.position)
             titleText = itemView.findViewById(R.id.title)
             pokemonButton = itemView.findViewById(R.id.pokemon_button)
-            pokemonButton.setOnClickListener{v: View ->
-                Toast.makeText(pokemonButton.context, titleText.text.toString(), Toast.LENGTH_LONG).show()
-            }
         }
     }
 
     /**
      *
      */
-    class MyRecyclerViewAdapter(val list: List<String>) : RecyclerView.Adapter<MyViewHolder>() {
+    private inner class MyRecyclerViewAdapter(val list: List<String>) : RecyclerView.Adapter<MyViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-            val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_recycler_view, parent, false)
+            val itemView = LayoutInflater.from(this@MainActivity).inflate(R.layout.item_recycler_view, parent, false)
+            // val pokemonButton=itemView.findViewById(R.id.pokemon_button)
+            //val pokemonButton = itemView.findViewById(R.id.pokemon_button)
+            itemView.setOnClickListener(ItemClickListener())
             return MyViewHolder(itemView)
         }
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -76,6 +76,19 @@ class MainActivity : AppCompatActivity() {
         }
         override fun getItemCount(): Int = list.size
 
+    }
+    /**
+     * リストをタップした時のリスナクラス。
+     */
+    private inner class ItemClickListener : View.OnClickListener {
+        override fun onClick(view: View) {
+            // タップされたLinearLayout内にあるメニュー名表示TextViewを取得。
+            val tvMenuName = view.findViewById<TextView>(R.id.title)
+            // メニュー名表示TextViewから表示されているメニュー名文字列を取得。
+            val menuName = tvMenuName.text.toString()
+            // トースト表示。
+            Toast.makeText(this@MainActivity, menuName, Toast.LENGTH_SHORT).show()
+        }
     }
 
 }
